@@ -11,3 +11,7 @@ export type Note = z.infer<typeof noteSchema>;
 export const convertToApiFormat = (note?: object) => {
   return noteSchema.parse(note);
 };
+
+export const validateApiFormat = (note: any) => {
+  return noteSchema.strict().parse(note);
+};

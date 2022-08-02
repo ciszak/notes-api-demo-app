@@ -2,7 +2,7 @@ import { APIGatewayProxyEventV2WithJWTAuthorizer } from "aws-lambda";
 import { ZodError } from "zod";
 import { formatRequestErrorResponse, formatSuccessResponse } from "../response";
 
-import { noteSchema } from "./schema";
+import { validateApiFormat } from "./schema";
 import { create } from "./datastore";
 
 export const handler = async (
@@ -14,7 +14,7 @@ export const handler = async (
 
   try {
     const input = JSON.parse(event.body);
-    const sanitizedInput = noteSchema.strict().parse(input);
+    const sanitizedInput = validateApiFormat(input);
 
     const owner = event.requestContext.authorizer.jwt.claims.sub as string;
 

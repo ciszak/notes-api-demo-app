@@ -4,7 +4,7 @@ import { APIGatewayProxyEventV2WithJWTAuthorizer } from "aws-lambda";
 
 import { update } from "./datastore";
 import { formatRequestErrorResponse, formatSuccessResponse } from "../response";
-import { noteSchema } from "./schema";
+import { validateApiFormat } from "./schema";
 
 export const handler = async (
   event: APIGatewayProxyEventV2WithJWTAuthorizer
@@ -15,7 +15,7 @@ export const handler = async (
 
   try {
     const input = JSON.parse(event.body);
-    const sanitizedInput = noteSchema.strict().parse(input);
+    const sanitizedInput = validateApiFormat(input);
 
     const owner = event.requestContext.authorizer.jwt.claims.sub as string;
     const id = event.pathParameters!.id!;
@@ -45,6 +45,6 @@ export const handler = async (
     }
 
     /* istanbul ignore next (won't work, because esbuild strips comments) */
-    throw new Error("should never happen");
+    throw error;
   }
 };
