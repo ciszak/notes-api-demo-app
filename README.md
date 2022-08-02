@@ -2,6 +2,20 @@
 
 Hi there.
 
+## Install
+
+You'll need `pnpm` installed. If you don't have it already you can enable corepack and it will automagically appear in proper version in this project.
+
+```bash
+corepack enable
+```
+
+After that install dependencies and you're good to go:
+
+```bash
+pnpm i
+```
+
 ## Useful commands
 
 - `pnpm test` perform the jest unit tests
